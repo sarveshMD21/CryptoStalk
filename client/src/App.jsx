@@ -10,7 +10,6 @@ function App() {
   
   const dark=useSelector((state)=>state.toggle.dark);
 
-
   useEffect(() => {
     if (dark) {
       document.documentElement.classList.add('dark');

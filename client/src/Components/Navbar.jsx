@@ -72,7 +72,7 @@ const Navbar = () => {
     }
 
   return (
-    <div className='w-full flex flex-row pb-5  pt-4 pl-3 pr-3 dark:text-white bg-blue-500'>
+    <div className='w-full flex flex-row pb-5  pt-4 pl-1 pr-1 md:pl-3 md:pr-3 dark:text-white bg-blue-500'>
         <div className='w-3/4 text-4xl font-bold'>
         CryptoStalk
         </div>
