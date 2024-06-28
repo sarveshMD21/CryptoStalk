@@ -5,6 +5,7 @@ import CoinPage from "./Pages/CoinPage";
 import NewsPage from "./Pages/NewsPage";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import CoinDisplay from "./Pages/CoinDisplay";
 
 function App() {
   
@@ -27,6 +28,8 @@ function App() {
        <Route path="/news" element={<NewsPage/>}>
        </Route>
        <Route path="/compare" element={<ComparePage/>}>
+       </Route>
+       <Route path="/:id" element={<CoinDisplay/>}>
        </Route>
     </Routes>
   </Router>

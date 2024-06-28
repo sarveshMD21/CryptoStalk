@@ -7,32 +7,29 @@ const InfoCard = () => {
         <div className='flex flex-col md:flex-row justify-between mb-2'>
             <div className='flex flex-row justify-between  md:flex-col '>
                 <div className='font-bold'>Total Crypto currencies:</div>
-                <div>3000</div>
+                <div>39563</div>
             </div>
             <div className='flex flex-row justify-between md:flex-col'>
                 <div className='font-bold'>Total Exchanges:</div>
-                <div>3000</div>
+                <div>192</div>
             </div>
         </div>
         <div className='flex flex-col md:flex-row justify-between mb-2'>
             <div className='flex flex-row justify-between  md:flex-col'>
-                <div className='font-bold'>Total Crypto currencies:</div>
-                <div>3000</div>
+                <div className='font-bold'>Total Markets:</div>
+                <div>42789</div>
             </div>
             <div className='flex flex-row justify-between md:flex-col'>
-                <div className='font-bold'>Total Exchanges:</div>
-                <div>3000</div>
+                <div className='font-bold'>total 24h Volume:</div>
+                <div>85057904661</div>
             </div>
         </div>
         <div className='flex flex-col md:flex-row justify-between'>
             <div className='flex flex-row justify-between  md:flex-col'>
-                <div className='font-bold'>Total Crypto currencies:</div>
-                <div>3000</div>
+                <div className='font-bold'>Total Market Cap:</div>
+                <div>$ 2.3 Trillion</div>
             </div>
-            <div className='flex flex-row justify-between md:flex-col'>
-                <div className='font-bold'>Total Exchanges:</div>
-                <div>3000</div>
-            </div>
+            
         </div>
     </div>
   )

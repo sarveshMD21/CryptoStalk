@@ -2,40 +2,100 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import CryptoSlice from './CryptoSlice';
 import TablePagination from './TablePagination';
+import WaitingComponent from './WaitingComponent';
 
 
-
-const CryptoTable = () => {
+const CryptoTable = ({search}) => {
  
     const [offset,setOffset]=useState(0);
-    const [coin,setCoin]=useState();
-    
+    const [coin,setCoin]=useState([]);
+    const [displayCoin,setDisplayCoin]=useState([]);
+    const [loading,setLoading]=useState(true);
+    const [filter,setFilter]=useState([]);
 
     useEffect(()=>{
-    const getData=async ()=>{
-      const options = {
-        
-        url: `${import.meta.env.VITE_API_BASE_URL}/coins?offset=${offset}&limit=${import.meta.env.VITE_LIMIT_PER_PAGE}`,
-        params: {
-            timePeriod: '1h',
-          },
-        headers: {
-          'x-rapidapi-key': import.meta.env.VITE_API_KEY,
-          'x-rapidapi-host': import.meta.env.VITE_API_HOST
-        }
-      };
-      try{
-        const response = await axios.request(options);
-	    setCoin(response.data.data.coins);
-        console.log(coin);
-      }catch(error){
-        console.log(error);
-      }
-    }
-    getData();
-    },[offset])
+        const getData=async ()=>{
+            const options = {
+              url: `${import.meta.env.VITE_API_BASE_URL}/coins?limit=1500`,
+              params: {
+                  timePeriod: '1h',
+                },
+              headers: {
+                'x-rapidapi-key': import.meta.env.VITE_API_KEY,
+                'x-rapidapi-host': import.meta.env.VITE_API_HOST
+              }
+            };
+            try{
+              const response = await axios.request(options);
+              setDisplayCoin(response.data.data.coins.slice(0,15));
+              setCoin(response.data.data.coins);
+              setFilter(response.data.data.coins);
+             // console.log(coin);
+            }catch(error){
+              console.log(error);
+            }finally{
+              setLoading(false);
+            }
+          }
+          setLoading(true);
+          getData();
+        //   if(coin.length>0)
+        //   setDisplayCoin(coin.slice(0,15));
+    },[])
 
+    useEffect(()=>{
+    const changeData= ()=>{
+        
+         const limit=parseInt(import.meta.env.VITE_LIMIT_PER_PAGE);
+        //console.log(typeof(limit));
+         try{
+            if(coin!=null)
+            setDisplayCoin(filter.slice(offset,offset+limit));
+            console.log(displayCoin);
+         }catch(error){
+            console.log(error);
+         }
+         finally{
+            setLoading(false);
+         }
+    }
+    setLoading(true);
+    changeData();
+    },[offset,filter])
+
+    useEffect(()=>{
+        console.log("Loading state updated "+loading);
+    },[loading])
    
+
+    useEffect(()=>{
+
+        console.log(search);
+        setLoading(true);
+        if(search!=""){
+            const data=[]
+            const func=(coin)=>{
+                coin.map((element)=>{
+                    if(element.name.includes(search)||element.symbol.includes(search)){
+                        data.push(element);
+                    }
+                })
+            }
+            func(coin);
+            setFilter(data);
+            setOffset(0);
+            console.log(data);
+            //console.log(offset);
+        }
+        else{
+            setFilter(coin);
+            setOffset(0);
+        }
+        setLoading(false);
+        
+    },[search])
+    
+
 
   return (
     <div className='flex flex-col md:p-4 w-5/6 dark:bg-black dark:text-white  '>
@@ -64,18 +124,21 @@ const CryptoTable = () => {
 
         </div>
        
-       <div>
-        {coin&&coin.map((element)=>{
-                return <CryptoSlice coin={element}/>
+        {!loading&&displayCoin&&displayCoin.map((element,index)=>{
+                return <div key={element.uuid} ><CryptoSlice  coin={element} index={index}/></div>
             })}
-        </div>     
-            
-            
-            
        
-        <div className='flex justify-center w-full'>
-          <TablePagination setOffset={setOffset}/>
-        </div>
+       {loading&&
+        <WaitingComponent label="fetching your data kindly wait"/>
+        }
+        
+      <div className={`flex justify-center w-full ${loading?'hidden':'block'}`}>
+        <TablePagination setOffset={setOffset} limit={filter.length} /> 
+      </div>
+        
+
+       
+        
     </div>
   )
 }

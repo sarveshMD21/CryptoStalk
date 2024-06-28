@@ -1,8 +1,11 @@
 import React from 'react'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { useNavigate } from 'react-router-dom';
 
-const CryptoSlice = ({coin}) => {
+const CryptoSlice = ({coin,index}) => {
+
+    const navigate=useNavigate();
 
     const reducePrice=(number)=>{
         const num1=number.substring(0,number.indexOf('.'));
@@ -13,6 +16,7 @@ const CryptoSlice = ({coin}) => {
         return num1+num2;
     
     }
+    console.log(index*100);
     
     const calculateVolume=(price,marketCap)=>{
         let num1=parseFloat(price);
@@ -29,8 +33,16 @@ const CryptoSlice = ({coin}) => {
         return true;
     }
 
+    const handleClick=()=>{
+        console.log(coin.uuid);
+        navigate(`/${coin.uuid}`);
+    }
+
+
   return (
-    <div className='grid grid-cols-4 lg-custom:grid-cols-6 justify-between md:p-2 mt-5  rounded-lg  border-2 border-blue-500 mb-2 hover:bg-blue-500'>
+   
+    <div className=" animate-slideIn delay-1400 " onClick={handleClick}>
+        <div className='w-full  hover:bg-blue-500 rounded-lg mb-2 grid grid-cols-4 lg-custom:grid-cols-6 justify-between md:p-2 mt-5 border-2 border-blue-500'>
         <div className=' flex justify-center'>
             <img src={coin.iconUrl} className= 'lg:20  md:w-10 md:h-10 w-4 h-6'/>
         </div>
@@ -51,7 +63,10 @@ const CryptoSlice = ({coin}) => {
         <div className='flex justify-center'>
             <div className=' hidden lg-custom:block font-bold'>{coin.marketCap}</div>
         </div>
+        </div>
+        
     </div>
+    
   )
 }
 

@@ -4,10 +4,11 @@ import {  createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState,useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-const TablePagination = ({setOffset}) => {
+const TablePagination = ({setOffset,limit}) => {
 
   const dark=useSelector((state)=>state.toggle.dark); 
- 
+  
+   
   
   const theme = createTheme({
     palette: {
@@ -41,6 +42,13 @@ const TablePagination = ({setOffset}) => {
   });
 
   const [currentTheme, setCurrentTheme] = useState(theme);
+  const [total,setTotal]=useState(100);
+  const [page, setPage] = useState(1);
+
+  useEffect(()=>{
+    const result=Math.ceil((limit)/15);
+    setTotal(result);
+  },[limit]); 
 
   useEffect(()=>{
     setCurrentTheme(dark?darkTheme:theme);
@@ -48,14 +56,16 @@ const TablePagination = ({setOffset}) => {
 
 
   const handleChange=(event,page)=>{
+    setPage(page);
     setOffset((page-1)*import.meta.env.VITE_LIMIT_PER_PAGE);
   }
 
   return (
     <ThemeProvider theme={currentTheme}>
       <Pagination
-        count={100}
+        count={total}
         color="primary"
+       
         onChange={handleChange}
       />
        
