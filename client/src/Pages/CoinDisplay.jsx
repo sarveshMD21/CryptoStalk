@@ -7,13 +7,14 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import axios from 'axios';
 import WaitingComponent from '../Components/WaitingComponent';
+import CryptoPriceDisplay from '../Components/CryptoPriceDisplay';
 
 const CoinDisplay = () => {
 
     const location=useLocation();
     const id=location.pathname.substring(1);
 
-    console.log(id);
+    
 
     const [coin,setCoin]=useState([]);
     const [loading,setLoading]=useState(true);
@@ -55,9 +56,12 @@ const CoinDisplay = () => {
         {!loading&&<Navbar/>}
         {!loading&&<div className='w-full h-screen flex justify-center md:p-10 p-2'>
        
-        <div className='w-full h-screen flex flex-col border-2 border-green-500'>
+        <div className='w-full h-screen flex flex-col '>
             <div className='p-5'>
             <CryptoSlice coin={coin}/>
+            </div>
+            <div className='w-full h-full  p-2'>
+                <CryptoPriceDisplay id={id}/>
             </div>
             
         </div>

@@ -42,7 +42,7 @@ const CryptoSlice = ({coin,index}) => {
   return (
    
     <div className=" animate-slideIn delay-1400 " onClick={handleClick}>
-        <div className='w-full  hover:bg-blue-500 rounded-lg mb-2 grid grid-cols-4 lg-custom:grid-cols-6 justify-between md:p-2 mt-5 border-2 border-blue-500'>
+        <div className='w-full dark:text-white hover:bg-blue-500 rounded-lg mb-2 grid grid-cols-4 lg-custom:grid-cols-6 justify-between md:p-2 mt-5 border-2 border-blue-500'>
         <div className=' flex justify-center'>
             <img src={coin.iconUrl} className= 'lg:20  md:w-10 md:h-10 w-4 h-6'/>
         </div>

@@ -11,4 +11,4 @@ const WaitingComponent = ({label}) => {
   )
 }
 
-export default WaitingComponent
+export default WaitingComponent;

@@ -90,9 +90,7 @@ const NavbarDrawer = () => {
             <div className='flex justify-center mt-5 mb-5'  onClick={handleClose}>
             <Link to="/compare" className={`text-lg ${location.pathname==='/compare'?'font-bold':'font-light'}`}>Compare</Link>
             </div>
-            <div className='flex justify-center mt-5 mb-5'  onClick={handleClose}>
-            <Link to="/news" className={`text-lg ${location.pathname==='/news'?'font-bold':'font-light'}`}>News</Link>
-            </div>
+            
             <div className='flex justify-center mt-5 mb-5'  onClick={handleClose}>
             <Link to="/coins" className={`text-lg ${location.pathname==='/coins'?'font-bold':'font-light'}`}>Dashboard</Link>
             </div>

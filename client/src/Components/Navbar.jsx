@@ -72,23 +72,21 @@ const Navbar = () => {
     }
 
   return (
-    <div className='w-full flex flex-row pb-5  pt-4 pl-1 pr-1 md:pl-3 md:pr-3 dark:text-white bg-blue-500'>
+    <div className='w-full flex flex-row pb-5  pt-4 pl-1 pr-1 md:pl-3 md:pr-3 dark:text-white dark:bg-black'>
         <div className='w-3/4 text-4xl font-bold'>
         CryptoStalk
         </div>
         <div className='hidden lg-custom:block w-1/4'>
         <div className='w-full flex flex-row justify-between'>
         <div className="flex items-center">
-            <Link to="/" className={`text-lg ${location.pathname==='/'?'font-bold':'font-light'}`}>Home</Link>
+            <Link to="/" className={`text-lg ${location.pathname==='/'?'font-bold text-blue-500':'font-light'}`}>Home</Link>
         </div>
         <div className="flex items-center">
-        <Link to="/compare" className={`text-lg ${location.pathname==='/compare'?'font-bold':'font-light'}`}>Compare</Link>
+        <Link to="/compare" className={`text-lg ${location.pathname==='/compare'?'font-bold  text-blue-500':'font-light'}`}>Compare</Link>
         </div>
+        
         <div className="flex items-center">
-        <Link to="/news" className={`text-lg ${location.pathname==='/news'?'font-bold':'font-light'}`}>News</Link>
-        </div>
-        <div className="flex items-center">
-        <Link to="/coins" className={`text-lg ${location.pathname==='/coins'?'font-bold':'font-light'}`}>Dashboard</Link>
+        <Link to="/coins" className={`text-lg ${location.pathname==='/coins'?'font-bold  text-blue-500':'font-light'}`}>Dashboard</Link>
         </div>
         <div ><MaterialUISwitch   checked={checked} onChange={handleClick}/></div>
         </div>

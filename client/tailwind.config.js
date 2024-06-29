@@ -9,6 +9,7 @@ export default {
     extend: {
       screens: {
         'lg-custom': '1350px',
+        'md-custom':'900px'
       },
       colors: {
         "pale-blue": "#F5F6FF",
