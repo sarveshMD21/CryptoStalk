@@ -12,7 +12,7 @@ const CryptoTable = ({search}) => {
     const [displayCoin,setDisplayCoin]=useState([]);
     const [loading,setLoading]=useState(true);
     const [filter,setFilter]=useState([]);
-
+    
     useEffect(()=>{
         const getData=async ()=>{
             const options = {
@@ -27,6 +27,9 @@ const CryptoTable = ({search}) => {
             };
             try{
               const response = await axios.request(options);
+              const Jsonobject=JSON.stringify(response.data.data.coins)
+              // localStorage.setItem("data",Jsonobject);
+              // console.log(Jsonobject);
               setDisplayCoin(response.data.data.coins.slice(0,15));
               setCoin(response.data.data.coins);
               setFilter(response.data.data.coins);
@@ -37,10 +40,15 @@ const CryptoTable = ({search}) => {
               setLoading(false);
             }
           }
+          //localStorage.removeItem("data");
+          
           setLoading(true);
           getData();
-        //   if(coin.length>0)
-        //   setDisplayCoin(coin.slice(0,15));
+         
+          // setLoading(true);
+          // getData();
+         
+          //console.log("Fetched from loaclStorage: "+value.length);
     },[])
 
     useEffect(()=>{
@@ -76,7 +84,9 @@ const CryptoTable = ({search}) => {
             const data=[]
             const func=(coin)=>{
                 coin.map((element)=>{
-                    if(element.name.includes(search)||element.symbol.includes(search)){
+                  const Name=element.name.toLowerCase();
+                  const symbol=element.symbol.toLowerCase();
+                    if(Name.includes(search)||symbol.includes(search)){
                         data.push(element);
                     }
                 })

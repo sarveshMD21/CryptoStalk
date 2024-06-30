@@ -18,6 +18,8 @@ function App() {
       document.documentElement.classList.remove('dark');
     }
   }, [dark]);
+   
+  
 
   return (
     <Router>
@@ -25,8 +27,7 @@ function App() {
       <Route path="/" element={<HomePage/>}></Route>
       <Route path="/coins" element={<CoinPage/>}>
        </Route>
-       <Route path="/news" element={<NewsPage/>}>
-       </Route>
+       
        <Route path="/compare" element={<ComparePage/>}>
        </Route>
        <Route path="/:id" element={<CoinDisplay/>}>

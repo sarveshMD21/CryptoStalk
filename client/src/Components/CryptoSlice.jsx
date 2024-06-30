@@ -16,7 +16,7 @@ const CryptoSlice = ({coin,index}) => {
         return num1+num2;
     
     }
-    console.log(index*100);
+    //console.log(index*100);
     
     const calculateVolume=(price,marketCap)=>{
         let num1=parseFloat(price);
@@ -34,7 +34,7 @@ const CryptoSlice = ({coin,index}) => {
     }
 
     const handleClick=()=>{
-        console.log(coin.uuid);
+        //console.log(coin.uuid);
         navigate(`/${coin.uuid}`);
     }
 
