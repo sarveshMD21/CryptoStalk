@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 import { iphone,gradient } from '../assets/icons'
 import { motion } from 'framer-motion';
 
-
 const HomePage = () => {
   return (
     <div className='flex relative flex-col w-screen h-screen overflow-x-hidden dark:bg-black'>

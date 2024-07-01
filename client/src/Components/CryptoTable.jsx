@@ -3,53 +3,55 @@ import axios from 'axios';
 import CryptoSlice from './CryptoSlice';
 import TablePagination from './TablePagination';
 import WaitingComponent from './WaitingComponent';
-
+import { useSelector } from 'react-redux';
 
 const CryptoTable = ({search}) => {
  
     const [offset,setOffset]=useState(0);
-    const [coin,setCoin]=useState([]);
+    // const [coin,setCoin]=useState([]);
     const [displayCoin,setDisplayCoin]=useState([]);
     const [loading,setLoading]=useState(true);
     const [filter,setFilter]=useState([]);
     
-    useEffect(()=>{
-        const getData=async ()=>{
-            const options = {
-              url: `${import.meta.env.VITE_API_BASE_URL}/coins?limit=1500`,
-              params: {
-                  timePeriod: '1h',
-                },
-              headers: {
-                'x-rapidapi-key': import.meta.env.VITE_API_KEY,
-                'x-rapidapi-host': import.meta.env.VITE_API_HOST
-              }
-            };
-            try{
-              const response = await axios.request(options);
-              const Jsonobject=JSON.stringify(response.data.data.coins)
-              // localStorage.setItem("data",Jsonobject);
-              // console.log(Jsonobject);
-              setDisplayCoin(response.data.data.coins.slice(0,15));
-              setCoin(response.data.data.coins);
-              setFilter(response.data.data.coins);
-             // console.log(coin);
-            }catch(error){
-              console.log(error);
-            }finally{
-              setLoading(false);
-            }
-          }
-          //localStorage.removeItem("data");
+    const coin=useSelector((state)=>state.crypto.coins);
+
+    // useEffect(()=>{
+    //     const getData=async ()=>{
+    //         const options = {
+    //           url: `${import.meta.env.VITE_API_BASE_URL}/coins?limit=1500`,
+    //           params: {
+    //               timePeriod: '1h',
+    //             },
+    //           headers: {
+    //             'x-rapidapi-key': import.meta.env.VITE_API_KEY,
+    //             'x-rapidapi-host': import.meta.env.VITE_API_HOST
+    //           }
+    //         };
+    //         try{
+    //           const response = await axios.request(options);
+    //           const Jsonobject=JSON.stringify(response.data.data.coins)
+    //           // localStorage.setItem("data",Jsonobject);
+    //           // console.log(Jsonobject);
+    //           setDisplayCoin(response.data.data.coins.slice(0,15));
+    //           setCoin(response.data.data.coins);
+    //           setFilter(response.data.data.coins);
+    //          // console.log(coin);
+    //         }catch(error){
+    //           console.log(error);
+    //         }finally{
+    //           setLoading(false);
+    //         }
+    //       }
+    //       //localStorage.removeItem("data");
           
-          setLoading(true);
-          getData();
+    //       setLoading(true);
+    //       getData();
          
-          // setLoading(true);
-          // getData();
+    //       // setLoading(true);
+    //       // getData();
          
-          //console.log("Fetched from loaclStorage: "+value.length);
-    },[])
+    //       //console.log("Fetched from loaclStorage: "+value.length);
+    // },[])
 
     useEffect(()=>{
     const changeData= ()=>{

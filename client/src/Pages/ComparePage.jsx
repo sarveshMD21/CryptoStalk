@@ -2,59 +2,49 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../Components/Navbar'
 import NavbarDrawer from '../Components/NavbarDrawer'
 import OptionStack from '../Components/OptionStack';
-import { useRef } from 'react';
 import axios from 'axios';
+import ErrorAlert from '../Components/ErrorAlert';
+import { alertSliceActions } from '../redux/alert-slice';
+import CompareDisplay from '../Components/CompareDisplay';
+import { useSelector,useDispatch } from 'react-redux';
+
 
 const ComparePage = () => {
 
- const [crypto1,setCrypto1]=useState(null);
- const [crypto2,setCrypto2]=useState(null);
- const [coin,setCoin]=useState(null);
- const [time,setTime]=useState("7d");
+  const coin=useSelector((state)=>state.crypto.coins);
+  const [crypto1,setCrypto1]=useState(null);
+  const [crypto2,setCrypto2]=useState(null);
+  const [time,setTime]=useState("7d");
+  const [message,setMessage]=useState("");
+  const [chart,setChart]=useState(false);
+ 
+ const dispatch=useDispatch();
 
+  const handleChange = (event) => {
+    setTime(event.target.value); // Update state with selected option value
+  };
 
+  const handleClick=()=>{
+    console.log("here is crypto1: "+crypto1);
+    console.log("here is crypto2: "+crypto2);
 
- //const clickProcessing = useR;
-
- useEffect(()=>{
-  const getData=async ()=>{
-      const options = {
-        url: `${import.meta.env.VITE_API_BASE_URL}/coins?limit=1500`,
-        params: {
-            timePeriod: '1h',
-          },
-        headers: {
-          'x-rapidapi-key': import.meta.env.VITE_API_KEY,
-          'x-rapidapi-host': import.meta.env.VITE_API_HOST
-        }
-      };
-      try{
-        const response = await axios.request(options);
-       
-        setCoin(response.data.data.coins);
-      }catch(error){
-        console.log(error);
-      }
-    }    
-   
-    getData();
-
-},[])
-
-const handleChange = (event) => {
-  setTime(event.target.value); // Update state with selected option value
-};
-
-const handleClick=()=>{
-  console.log(time);
-  console.log(crypto1);
-  console.log(crypto2);
+ if(crypto1==null||crypto2==null){
+  setMessage("please select both crypto coins");
+  dispatch(alertSliceActions.setOpen());
+ }
+ else if(crypto1===crypto2){
+  setMessage("both coins cannot be same");
+  dispatch(alertSliceActions.setOpen());
+ }
+ else{
+  setChart(true);
+ }
 }
 
   return (
     <div className='flex flex-col w-screen h-screen dark:bg-black overflow-y-auto overflow-x-hidden'>
         <Navbar/>
-        <div className='w-screen h-full  p-5 md:p-10'>
+         <div className='w-screen h-full  p-5 md:p-10'>
          <div className=' w-full h-screen flex flex-col'>
           <div className='w-full flex  flex-col lg-custom:flex-row pl-2 pr-2 pt-2 justify-between '>
           
@@ -90,10 +80,16 @@ const handleClick=()=>{
             </div> 
           
             </div>
+
+           
+          </div>
+          <div className='p-1 w-full h-full border-2 border-green-400'>
+          {chart&& <CompareDisplay crypto1={crypto1} crypto2={crypto2} time={time} />}
           </div>
           </div> 
         </div>
         <NavbarDrawer/>
+        <ErrorAlert label={message}/>
     </div>
   )
 }

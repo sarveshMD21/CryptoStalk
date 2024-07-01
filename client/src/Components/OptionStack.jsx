@@ -13,17 +13,16 @@ const OptionStack = ({coin,setCrypto,crypto}) => {
 
   useEffect(()=>{
      if(search!=""){
+        setCrypto(null);
         const data=[];
         const value=search.toLowerCase();
         coin.map((item)=>{
             const name=item.name.toLowerCase();
-            //console.log(name + " "+search );
 
             if(name.includes(value)){
                 data.push(item);
             }
         })
-        //console.log(coin);
         setOption(data);
         setFlag(true);
      }
@@ -36,23 +35,35 @@ const OptionStack = ({coin,setCrypto,crypto}) => {
 
   const handleBlur=(event)=>{
     setTimeout(()=>{
+         const value=event.target.value.toLowerCase();
+        
+        let flag=1;
+        coin.map((item)=>{
+            const name=item.name.toLowerCase();
+
+            if(name===value){
+                flag=0;
+            }
+        })
+        console.log(flag);
+        if(flag==1){
+            
+            dispatch(alertSliceActions.setOpen());
+        }
         setFlag(false);
     },[200]);
   }
 
  const handleKeyDown=(event)=>{
     if((event.key === 'Enter' || event.keyCode === 13)){
-        //console.log("hello2");
 
         const value=search.toLowerCase();
         let flag=1;
         coin.map((item)=>{
             const name=item.name.toLowerCase();
-            //console.log(name + " "+search );
 
             if(name===value){
                 flag=0;
-                //dis
             }
         })
         console.log(flag);
@@ -65,17 +76,20 @@ const OptionStack = ({coin,setCrypto,crypto}) => {
  }
 
   const handleClick=(uuid,name)=>{
+    setTimeout(()=>{
     setCrypto(uuid);
+    
+    },[200]);
     setSearch(name);
     setFlag(false);
   }
 
   return (
-    <div className='w-full   flex flex-col '>
+    <div className='w-full   flex flex-col ' > 
         <input className='w-full border-2 h-14 border-blue-500 rounded-lg pl-2' placeholder='Crypto' value={search} 
         onChange={(e)=>setSearch(e.target.value)}
-        onBlur={(e)=>handleBlur(e)}
         onKeyDown={(e)=>handleKeyDown(e)}
+        onBlur={(e)=>handleBlur(e)}
         />
         {flag&&<div className='w-full  absolute z-10 mt-16 flex flex-col h-40 overflow-y-auto'>
         {option.map((item)=>{
